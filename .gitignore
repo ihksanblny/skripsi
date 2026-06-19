@@ -1,0 +1,40 @@
+# ===============================
+# FOLDER YANG DILARANG DI-UPLOAD
+# ===============================
+
+# 1. Environment & Dependencies (Sangat Berat)
+.venv/
+frontend/node_modules/
+frontend/dist/
+backend/__pycache__/
+__pycache__/
+
+# 2. File Model & Cache Berukuran Besar
+# saved_models/ (SENGAJA DIBUKA KARENA UKURANNYA KECIL)
+model_lda/
+save/
+
+# 3. Dokumen Skripsi Pribadi & Riset
+*.docx
+*.xlsx
+*.csv
+2218070-for-semhas.docx
+Quisioner*
+scraping/
+visual/
+# 4. File Log / Output Text Sementara
+debug/
+hasil_coherence.txt
+hasil_topik.txt
+lda_output.txt
+docx_content.txt
+
+# ===============================
+# FILE YANG BOLEH (DIKECUALIKAN)
+# ===============================
+# Walaupun CSV kadang diabaikan, untuk skripsi kita butuh reviews_cleaned.csv 
+# untuk dimasukkan ke database AWS nantinya.
+!reviews_cleaned.csv
+
+# stem_cache.json sangat penting di-upload agar Sastrawi di AWS tidak mulai dari 0
+!stem_cache.json

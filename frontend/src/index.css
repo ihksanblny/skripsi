@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    /* Meningkatkan skala font dasar secara signifikan (sidang-ready) */
+    font-size: 125%; 
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-slate-200 bg-slate-950;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Menambahkan ketegasan pada heading */
+  h1, h2, h3, h4 {
+    @apply tracking-tight font-bold;
+  }
+
+  /* Memastikan paragraf dan teks kecil tetap terbaca jelas */
+  p, span, div {
+    @apply leading-relaxed;
+  }
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+/* Custom scrollbar agar terlihat lebih premium di layar sidang */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
