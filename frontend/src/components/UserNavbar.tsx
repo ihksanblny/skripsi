@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface UserNavbarProps {
   userTab: string;
@@ -14,9 +15,25 @@ export default function UserNavbar({ userTab, setUserTab, setViewMode }: UserNav
   useEffect(() => {
     const stored = localStorage.getItem('user_username');
     setUsername(stored || null);
-    const storedRole = localStorage.getItem('user_role');
+    const storedRole = localStorage.getItem('user_role_v2');
     setRole(storedRole);
   }, [userTab]);
+
+  const handleAdminAccess = async () => {
+    const pin = window.prompt("Keamanan Lanjutan (2-Step Verification)\n\nSilakan masukkan PIN Rahasia Admin:");
+    if (!pin) return; // Batal atau kosong
+
+    try {
+      const res = await axios.post('http://127.0.0.1:8000/api/verify-pin', { pin });
+      if (res.data.success) {
+        setViewMode('admin');
+      } else {
+        alert(res.data.error || "PIN Salah! Akses ke Dashboard Admin ditolak.");
+      }
+    } catch (err) {
+      alert("Gagal memverifikasi PIN ke server.");
+    }
+  };
 
   const navigate = (tab: string) => {
     setUserTab(tab);
@@ -26,7 +43,7 @@ export default function UserNavbar({ userTab, setUserTab, setViewMode }: UserNav
   const handleLogout = () => {
     localStorage.removeItem('user_username');
     localStorage.removeItem('user_email');
-    localStorage.removeItem('user_role');
+    localStorage.removeItem('user_role_v2');
     setUsername(null);
     setRole(null);
     setUserTab('home');
@@ -98,7 +115,7 @@ export default function UserNavbar({ userTab, setUserTab, setViewMode }: UserNav
             )}
             {role === 'admin' && (
               <button
-                onClick={() => setViewMode('admin')}
+                onClick={handleAdminAccess}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-800 transition-all active:scale-95"
               >
                 <svg className="w-3.5 h-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -188,7 +205,10 @@ export default function UserNavbar({ userTab, setUserTab, setViewMode }: UserNav
 
               {role === 'admin' && (
                 <button
-                  onClick={() => { setViewMode('admin'); setMobileMenuOpen(false); }}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setTimeout(handleAdminAccess, 100);
+                  }}
                   className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold text-left text-stone-700 hover:bg-stone-50 border border-transparent transition-all mt-2"
                 >
                   <span>⚙️</span>

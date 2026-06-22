@@ -35,7 +35,7 @@ export default function UserLogin({ setUserTab }: UserLoginProps) {
         setSuccess('Login Berhasil! Mengalihkan ke Beranda...');
         localStorage.setItem('user_username', res.data.username);
         localStorage.setItem('user_email', res.data.email);
-        localStorage.setItem('user_role', res.data.role || 'user');
+        localStorage.setItem('user_role_v2', res.data.role || 'user');
         
         setTimeout(() => {
           setUserTab('home');

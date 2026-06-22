@@ -83,3 +83,28 @@ def login_user(user: UserLogin, db: Session = Depends(database.get_db)):
         "email": db_user.email,
         "role": db_user.role
     }
+
+class PinInput(BaseModel):
+    pin: str
+
+import os
+import json
+
+@router.post("/verify-pin")
+def verify_admin_pin(input_data: PinInput):
+    # Membaca PIN dari file rahasia yang TIDAK AKAN diupload ke GitHub
+    secret_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret.json")
+    
+    SECRET_PIN = "2024" # Default fallback jika file belum dibuat
+    
+    try:
+        if os.path.exists(secret_path):
+            with open(secret_path, "r") as f:
+                data = json.load(f)
+                SECRET_PIN = data.get("admin_pin", "2024")
+    except Exception:
+        pass
+        
+    if input_data.pin == SECRET_PIN:
+        return {"success": True}
+    return {"success": False, "error": "PIN Salah!"}

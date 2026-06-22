@@ -49,7 +49,7 @@ export default function App() {
 
   // Proteksi Halaman Admin Dashboard
   if (viewMode === 'admin') {
-    const isUserAdmin = localStorage.getItem('user_role') === 'admin';
+    const isUserAdmin = localStorage.getItem('user_role_v2') === 'admin';
     if (!isUserAdmin) {
       // Menunda set state agar tidak mengganggu siklus render React
       setTimeout(() => {
