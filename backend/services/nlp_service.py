@@ -146,7 +146,6 @@ normalization_dict = {
 
     # --- Singkatan fasilitas pendek agar aman dari filter panjang karakter ---
     'ac': 'pendingin_ruangan',
-    'berac': 'pendingin_ruangan',
 }
 
 import json
